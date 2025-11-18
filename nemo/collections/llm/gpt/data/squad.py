@@ -16,7 +16,8 @@ import shutil
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union
 
-from datasets import DatasetDict, load_dataset
+from datasets import DatasetDict
+from illuin_datasets_hub import load_dataset
 
 from nemo.collections.llm.gpt.data.core import get_dataset_root
 from nemo.collections.llm.gpt.data.fine_tuning import FineTuningDataModule

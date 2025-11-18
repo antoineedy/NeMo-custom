@@ -21,7 +21,8 @@ import lightning.pytorch as pl
 import numpy as np
 import torch
 import torch.distributed as dist
-from datasets import Dataset, DatasetDict, load_dataset
+from datasets import Dataset, DatasetDict
+from illuin_datasets_hub import load_dataset
 from torch.utils.data import DataLoader
 
 from nemo.collections.llm.gpt.data.hf_dataset_packed_sequence import HFDatasetPackedSequenceHelper

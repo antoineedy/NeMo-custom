@@ -29,7 +29,7 @@ from itertools import repeat
 from multiprocessing import Pool
 from pathlib import Path
 
-import datasets as hf_datasets
+import illuin_datasets_hub
 from omegaconf import OmegaConf, open_dict
 
 from nemo.core.config import hydra_runner
@@ -88,7 +88,7 @@ def main(cfg) -> None:
         logging.info(
             f"Loading from HuggingFace datasets library with config: {OmegaConf.to_container(data_cfg, resolve=True)}"
         )
-        dataset = hf_datasets.load_dataset(**data_cfg)
+        dataset = illuin_datasets_hub.load_dataset(**data_cfg)
         logging.info("Start extracting text from dataset...")
         with Pool(cfg.num_workers) as p:
             text_corpus = p.map(worker, zip(dataset, repeat(cfg)))

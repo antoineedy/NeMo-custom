@@ -16,7 +16,7 @@ import json
 import shutil
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
-from datasets import load_dataset
+from illuin_datasets_hub import load_dataset
 
 from nemo.collections.llm.gpt.data.core import get_dataset_root
 from nemo.collections.llm.gpt.data.fine_tuning import FineTuningDataModule

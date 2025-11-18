@@ -22,7 +22,7 @@ from typing import List, Mapping, Optional
 import datasets
 import numpy as np
 import torch
-from datasets import load_dataset
+from illuin_datasets_hub import load_dataset
 
 from nemo.collections.common.tokenizers import TokenizerSpec
 from nemo.collections.llm.gpt.data.utils import (

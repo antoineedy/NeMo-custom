@@ -25,7 +25,7 @@ import modelopt.torch.export as mte
 import modelopt.torch.opt as mto
 import modelopt.torch.quantization as mtq
 import torch
-from datasets import load_dataset
+from illuin_datasets_hub import load_dataset
 from megatron.core.inference.common_inference_params import CommonInferenceParams
 from tqdm import tqdm
 from transformers import PreTrainedTokenizerBase

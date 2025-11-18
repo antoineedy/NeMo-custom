@@ -17,7 +17,8 @@ import os
 import lightning.pytorch as pl
 import torch
 import torch.distributed as dist
-from datasets import Dataset, DatasetDict, load_dataset
+from datasets import Dataset, DatasetDict
+from illuin_datasets_hub import load_dataset
 from torch.utils.data import DataLoader
 from torch.utils.data.distributed import DistributedSampler
 

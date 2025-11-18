@@ -28,7 +28,8 @@ import numpy as np
 import sentencepiece as spm
 import sentencepiece.sentencepiece_model_pb2 as model
 import torch
-from datasets import Dataset, IterableDataset, load_dataset
+from datasets import Dataset, IterableDataset
+from illuin_datasets_hub import load_dataset
 from tokenization_helper import *
 from tokenizers import (
     SentencePieceBPETokenizer,

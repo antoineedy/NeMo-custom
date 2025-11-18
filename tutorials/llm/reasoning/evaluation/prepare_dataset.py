@@ -23,7 +23,7 @@ import urllib.request
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
-from datasets import load_dataset
+from illuin_datasets_hub import load_dataset
 
 random.seed(42)
 

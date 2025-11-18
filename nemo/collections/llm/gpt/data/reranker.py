@@ -22,7 +22,8 @@ from typing import TYPE_CHECKING, Any, Dict, List, Literal, Mapping, Optional, U
 
 import numpy as np
 import torch
-from datasets import DatasetDict, load_dataset
+from datasets import DatasetDict
+from illuin_datasets_hub import load_dataset
 
 from nemo.collections.common.tokenizers import TokenizerSpec
 from nemo.collections.llm.gpt.data.retrieval import CustomRetrievalDataModule

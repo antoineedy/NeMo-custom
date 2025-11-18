@@ -16,7 +16,7 @@ from argparse import ArgumentParser
 
 import numpy as np
 import torch
-from datasets import load_dataset
+from illuin_datasets_hub import load_dataset
 from einops import rearrange
 from tqdm import tqdm
 

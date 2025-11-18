@@ -15,6 +15,7 @@
 from typing import Callable, Dict, List, Optional, Tuple, Union
 
 import datasets as hf_datasets
+import illuin_datasets_hub
 import torch
 from datasets import concatenate_datasets
 from datasets.distributed import split_dataset_by_node
@@ -86,22 +87,35 @@ class HFTextProcessor:
             text_tokens_length += 1
         return text_tokens, text_tokens_length
 
+def get_nested_dict_value(nested_dict, key_path):
+    """
+    Get value from nested dict given a key path like 'audio.array'
+    """
+    keys = key_path.split('.')
+    result = nested_dict
+    for k in keys:
+        # Handle AudioDecoder objects specially
+        if hasattr(result, '__getitem__') and hasattr(result, '__class__'):
+            # Check if it's an AudioDecoder or similar object
+            if 'AudioDecoder' in str(type(result)):
+                try:
+                    result = result[k]
+                    continue
+                except (KeyError, TypeError):
+                    raise KeyError(f"Key '{k}' not found in audio decoder")
 
-def get_nested_dict_value(dictionary: dict, key: str):
-    """
-    the key should be a string of nested keys separated by `.`, e.g. `key1.key2.key3`,
-    then the returned value will be `dictionary[key1][key2][key3]`
-    """
-    nested_keys = key.split(".")
-    result = dictionary
-    for k in nested_keys:
-        if k not in result:
-            raise KeyError(
-                f"Key `{key}` not found in [{result.keys()}], target is {nested_keys}, input is {dictionary}"
-            )
-        result = result[k]
+        # Original logic for regular dicts
+        if isinstance(result, dict):
+            if k not in result:
+                raise KeyError(f"Key '{k}' not found in nested dict")
+            result = result[k]
+        else:
+            # Try direct attribute/item access
+            try:
+                result = result[k]
+            except (KeyError, TypeError, AttributeError):
+                raise KeyError(f"Cannot access key '{k}' in object of type {type(result)}")
     return result
-
 
 class _HFAudioTextDataset(Dataset):
     """
@@ -172,7 +186,7 @@ class _HFAudioTextDataset(Dataset):
                     )
                 data_cfg.streaming = False
             logging.info(f"Loading HuggingFace Dataset with cfg: {data_cfg}")
-            dataset_list.append(hf_datasets.load_dataset(**data_cfg))
+            dataset_list.append(illuin_datasets_hub.load_dataset(**data_cfg))
             logging.info(f"Dataset loaded with {len(dataset_list[-1])} samples")
         self.dataset = concatenate_datasets(dataset_list)
 
@@ -455,7 +469,7 @@ class _HFIterableAudioTextDataset(IterableDataset):
                 # streaming must be True for iterable dataset
                 data_cfg.streaming = True
             logging.info(f"Streaming HuggingFace IterableDataset with cfg: {data_cfg}")
-            dataset_list.append(hf_datasets.load_dataset(**data_cfg))
+            dataset_list.append(illuin_datasets_hub.load_dataset(**data_cfg))
 
         self.dataset = concatenate_datasets(dataset_list)
         logging.info(f"Total number of samples cannot be extracted from HF streaming dataset")

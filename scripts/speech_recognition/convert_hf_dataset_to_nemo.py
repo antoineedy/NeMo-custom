@@ -91,7 +91,8 @@ import hydra
 import librosa
 import soundfile
 import tqdm
-from datasets import Audio, Dataset, IterableDataset, load_dataset
+from datasets import Audio, Dataset, IterableDataset
+from illuin_datasets_hub import load_dataset
 from hydra.conf import HydraConf, RunDir
 from hydra.core.config_store import ConfigStore
 from omegaconf import OmegaConf
